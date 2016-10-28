@@ -17,17 +17,30 @@
 #    along with this program; if not, write to the Free Software Foundation,
 #    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
-from flask import Flask
+from datetime import datetime
+
+from flask import Flask, request
 
 
 app = Flask(__name__)
 app.config.from_object("dummy_flask_server.config")
 
-@app.route('/')
+@app.route("/")
 def index():
-    return 'Hello, World!'
+    return "Hello, World!"
 
 
-@app.route('/error/')
+@app.route("/error/")
 def error():
     raise Exception()
+
+
+@app.route("/pre-store/", methods=["GET", "POST"])
+def start():
+    app.config["START_TIME"] = datetime.now()
+    return "", 200
+
+
+@app.route("/post-store/", methods=["GET", "POST"])
+def finish():
+    raise Exception(request.values)
