@@ -17,6 +17,8 @@
 #    along with this program; if not, write to the Free Software Foundation,
 #    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 
+import sys
+
 from datetime import datetime
 
 from flask import Flask, request
@@ -44,3 +46,9 @@ def start():
 @app.route("/post-store/", methods=["GET", "POST"])
 def finish():
     raise Exception(request.values)
+
+
+@app.route("/api/fixity/<uuid>", methods=["GET", "POST"])
+def fixity(uuid):
+    print >> sys.stderr, request.json
+    return "", 201
